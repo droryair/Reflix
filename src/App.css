@@ -13,17 +13,54 @@ body{
   font-family: 'Pragati Narrow', sans-serif;
 } */
 
+#topbar{
+  height: 100%;
+  position: relative;
+}
 
 #reflix{
+  display: inline-block;
   padding-bottom:50px;
   padding-top: 20px;
   padding-left: 25px;
   color:#d81119 ;
   font-family: 'Bebas Neue', cursive; 
-  /* position: absolute; */
-  /* right:20px; */
-  /* font-size:30px; */
   letter-spacing: 2px;
+  margin-right: 30px;
+}
+
+.welcome{
+  display: inline-block;
+  text-align: center;
+  width: fit-content;
+  /* padding-left: 10px ; */
+  margin:auto;
+  position:relative;
+  vertical-align: middle;
+}
+
+.welcome > a > img{
+  display: block;
+  max-width:60px;
+  margin:4px;
+  padding-left:10px;
+  margin-top: 10px;
+  height:auto;
+}
+
+.welcome > p {
+  max-width:100px;
+  margin:0px;
+  padding:0px;
+  color:#535352;
+}
+
+#username{
+  display: inline-block;
+  text-align: center;
+  width: fit-content;
+  padding-left: 10px ;
+  margin:auto;
 }
 
 .headline{

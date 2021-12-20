@@ -19,7 +19,9 @@ class Movie extends Component {
         return (
             <div className="movie-container" key={m.id}>
                 <button id={m.id} className="rent-movie" onClick={() => this.rentMovie(m)}>
-                    {this.determineButton(m)}</button> <Link to={`/movies/${m.id}`}>
+                    {this.determineButton(m)}
+                </button>
+                <Link to={`/movies/${m.id}`}>
                     <img src={m.img} alt={m.title} className='movie-image'></img>
                 </Link>
                 <span>

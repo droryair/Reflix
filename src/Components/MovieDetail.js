@@ -5,7 +5,7 @@ class MovieDetail extends Component{
         const movie = this.props.movie
         return(
             <div>
-                <img className="detail-movie-image" src={movie.img}  alt=".."></img>
+                <img className="detail-movie-image" src={movie.img}  alt={movie.title}></img>
                 <div>Year: {movie.year}</div>
                 <p className="descrShort" >{movie.descrShort}</p>
             </div>

@@ -8,10 +8,22 @@ class Catalog extends Component {
             rentedCounter: 0,
             searchValue: "",
             budget: 10,
-            rentingCost: 3
+            rentingCost: 1
+            // username: ''
         }
     }
 
+    /**
+     * runs once when the component is first rendered.
+     */
+    componentDidMount(){
+        this.getUserName()
+    }
+
+
+    /**
+     * filters the rented movies, and updates the state's 'rented counter' and 'budget'.
+     */
     handleRentedCounter = async () => {
         const rentedArr = this.props.movies.filter(m => m.isRented)
         await this.setState({ rentedCounter: rentedArr.length })
@@ -19,6 +31,27 @@ class Catalog extends Component {
     }
 
 
+    getUserName = () => {
+        // walk-around for gettin the query param "id"
+        const currentURL = window.location.href
+        if (currentURL.includes('id')) {
+            const id = currentURL.substring(currentURL.indexOf('=') + 1)
+            const users = this.props.users
+            const user = users.filter(u => u.id === id)
+            this.props.getUsername(user)
+        }
+        else{
+            this.props.getUsername('')
+        }
+    }
+
+
+
+    /**
+     * checks if the movie is rented
+     * changes the state's "rented counter" and the movie's "is rented" properties accordingly.
+     * @param {dict} movie movie to be rented
+     */
     rentMovie = async (movie) => {
         if (!movie.isRented && this.state.budget - this.state.rentingCost > 0) {
             await this.props.rentMovie(movie.id)
@@ -31,6 +64,10 @@ class Catalog extends Component {
         }
     }
 
+    /**
+     * updates the state's "search value" according to the event.
+     * @param {*} e event
+     */
     searchMovies = (e) => {
         const inputValue = e.target.value.toLowerCase()
         if (inputValue) {
@@ -44,6 +81,7 @@ class Catalog extends Component {
         const movies = this.props.movies
         return (
             <div>
+
                 <div id='input'>
                     <input placeholder="What would you like to watch next?" onChange={this.searchMovies}></input>
                 </div>

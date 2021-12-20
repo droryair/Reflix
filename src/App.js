@@ -20,12 +20,12 @@ class App extends Component {
 
     {
       users: [
-        { id: "u0", name: 'David', budget: 10, imgUrl: u0_icon },
-        { id: "u1", name: 'Anna', budget: 10, imgUrl: u1_icon },
+        { id: "u0", name: 'Netossa', budget: 10, imgUrl: u0_icon },
+        { id: "u1", name: 'SeaHawk', budget: 10, imgUrl: u1_icon },
         { id: "u2", name: 'She-ra', budget: 10, imgUrl: u2_icon },
-        { id: "u3", name: 'Susan', budget: 10, imgUrl: u3_icon },
-        { id: "u4", name: 'Susan', budget: 10, imgUrl: u4_icon },
-        { id: "u5", name: 'Susan', budget: 10, imgUrl: u5_icon },
+        { id: "u3", name: 'Catra', budget: 10, imgUrl: u3_icon },
+        { id: "u4", name: 'Glimmer', budget: 10, imgUrl: u4_icon },
+        { id: "u5", name: 'Bow', budget: 10, imgUrl: u5_icon },
       ],
       movies: [
         { id: 0, isRented: false, title: "Tarzan", year: 1999, img: "https://vignette.wikia.nocookie.net/disney-fan-fiction/images/4/42/Tarzan_2004_cover.jpg/revision/latest?cb=20140331030811", descrShort: "Tarzan was born into wealth but raised into incredible misfortune. Shiprweck, parents mauled by a jaguar. Luckily, a troop of gorillas took him in, but the Big Daddy gorilla never took a liking to him. That is, until the end when it's too late. Why is it too late? Watch and find out." },
@@ -34,9 +34,11 @@ class App extends Component {
         { id: 3, isRented: false, title: "The Sword in the Stone", year: 1963, img: "https://www.disneyinfo.nl/images/laserdiscs/229-1-AS-front.jpg", descrShort: "Arthur is a young boy who just wants to be a knight's squire. Alas, he is dubbed 'Wart' early on, and it was all downhill from there for a while. On a hunting trip he falls in on Merlin, literally. Merlin is a possibly-mentally-unstable-and-ethically-dubious Wizard that turns Arthur into a literate, at-one-point harassed squirrel. Watch to find out what the heck that means." },
         { id: 4, isRented: false, title: "Beauty and the Beast", year: 2016, img: "https://images-na.ssl-images-amazon.com/images/I/51ArFYSFGJL.jpg", descrShort: "Basically the same as the original, except now Hermi-- Emma Wattson plays Belle, fittingly so some would say, given how actively progressive she is regarding women's rights. Rumor has it that in the bonus scenes she whips out a wand and turns Gaston into a toad, but in order to watch those scenes you need to recite a certain incantation." }
       ],
+      currentUser: ''
     }
   }
 
+  // receives a movie id, and updates it's 'is rented' property, to the opposite one.
   rentMovie = async (movieId) => {
     const tempMovies = this.state.movies
     const rentedMovie = tempMovies.find(m => m.id === movieId)
@@ -44,21 +46,35 @@ class App extends Component {
     await this.setState({ movies: tempMovies })
   }
 
+  getUsername = async (user) => {
+    await this.setState({ currentUser: user[0] })
+  }
 
   render() {
     return (
       <Router>
         <div className="App">
-
-          {/* <div className="font-tag"> <Link to='/'>Home</Link></div>
-            <div className="font-tag"> <Link to='/catalog'>Catalog</Link></div> */}
-          <h1 id="reflix">REFLIX</h1>
-
           <div>
+            <div id="topbar">
+              <Link to='/'>
+
+                <h1 id="reflix">REFLIX</h1>
+              </Link>
+
+              {this.state.currentUser ?
+                <div className="welcome">
+                  <Link to='/'>
+                    <img alt='userIcon' src={this.state.currentUser.imgUrl} ></img>
+                  </Link>
+                  <p id="username"> {this.state.currentUser.name}</p>
+                </div>
+                : null}
+            </div>
+
             <Routes>
 
               <Route path="/" element={<Landing users={this.state.users} />}></Route>
-              <Route path='/catalog' element={<Catalog users={this.state.users} movies={this.state.movies} rentMovie={this.rentMovie} />} />
+              <Route path='/catalog' element={<Catalog users={this.state.users} movies={this.state.movies} rentMovie={this.rentMovie} getUsername={this.getUsername} />} />
 
               {this.state.movies.map(m => {
                 return (
